@@ -83,21 +83,22 @@ To add a project, create `src/data/projects/<slug>.ts`, export it from `projects
   highlights relevant experience and skills through `<html data-role>`. These are CSS-only highlights, so
   server-rendered sections stay static. The choice persists in `localStorage`.
 
-## Quality (production build, Lighthouse 12)
+## Quality (Lighthouse 12, against the live Vercel deployment)
 
 | Route | Mobile perf | Desktop perf | Accessibility | Best practices | SEO |
 | --- | --- | --- | --- | --- | --- |
-| `/` | 95 | 100 | 100 | 100 | 100 |
-| `/work` | 96 | 100 | 100 | 100 | 100 |
-| `/work/helio` | 95 | 100 | 100 | 100 | 100 |
-| `/research` | 96 | 100 | 100 | 100 | 100 |
-| `/resume` | 95 | 100 | 100 | 100 | 100 |
+| `/` | 97 | 100 | 100 | 100 | 100 |
+| `/work` | 98 | 100 | 100 | 100 | 100 |
+| `/work/helio` | 100 | 100 | 100 | 100 | 100 |
+| `/research` | 100 | 100 | 100 | 100 | 100 |
+| `/resume` | 100 | 100 | 100 | 100 | 100 |
 
-CLS is 0.000 on every route measured. These scores come from local runs and vary slightly between runs.
+CLS is 0.000 on every route measured. Scores vary slightly between runs.
 
 ## Deployment
 
-Deployed on Vercel as a static or partially prerendered Next.js app. No backend or database.
+Live at **https://gnanasudharsan-portfolio.vercel.app**. Deployed on Vercel as a static or partially
+prerendered Next.js app, with no backend or database. Pushes to `main` deploy automatically.
 
 ```bash
 vercel --prod
