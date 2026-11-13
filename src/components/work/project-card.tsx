@@ -126,9 +126,9 @@ export function ProjectCard({ project, priority, eager }: { project: Project; pr
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex min-h-8 items-center gap-1.5 text-fg-3 hover:text-fg"
-                aria-label={`${project.short} live site (opens in new tab)`}
+                aria-label={`${project.short} live demo (opens in new tab)`}
               >
-                <span className="size-1.5 rounded-full bg-teal" aria-hidden /> {project.status === "Live" ? "Live" : "Site"}
+                <span className="size-1.5 rounded-full bg-teal" aria-hidden /> Live demo
               </a>
             )}
           </div>

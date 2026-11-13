@@ -90,7 +90,7 @@ async function CaseStudy({ params }: { params: Promise<{ slug: string }> }) {
               </ButtonLink>
               {p.links.live && (
                 <ButtonLink href={p.links.live} variant="secondary" external>
-                  {p.status === "Research" || p.status === "In Development" ? "Project site" : "Live"}
+                  Live demo
                 </ButtonLink>
               )}
               {p.links.paper && (
@@ -291,7 +291,7 @@ async function CaseStudy({ params }: { params: Promise<{ slug: string }> }) {
                 {p.links.live && (
                   <li>
                     <a href={p.links.live} target="_blank" rel="noreferrer" className="inline-flex h-10 items-center gap-1.5 rounded-full border border-line px-4 text-[14px] text-fg-2 hover:text-fg">
-                      {p.status === "Live" ? "Live site" : "Project site"} <ArrowUpRight size={13} aria-hidden />
+                      Live demo <ArrowUpRight size={13} aria-hidden />
                     </a>
                   </li>
                 )}

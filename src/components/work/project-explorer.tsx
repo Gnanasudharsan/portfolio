@@ -153,12 +153,23 @@ export function ProjectExplorer({ items }: { items: ExplorerItem[] }) {
               {i.note && <p className="mt-3 text-[12px] leading-snug text-fg-4">{i.note}</p>}
               <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-1 pt-4">
                 <span className="font-mono text-[11px] text-fg-4">{i.stack.slice(0, 4).join(" · ")}</span>
+                {i.live && (
+                  <a
+                    href={i.live}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="relative z-10 ml-auto inline-flex min-h-8 items-center gap-1.5 text-[12.5px] text-fg-2 hover:text-fg"
+                    aria-label={`${i.name} live demo (opens in new tab)`}
+                  >
+                    <span className="size-1.5 rounded-full bg-teal" aria-hidden /> Live demo
+                  </a>
+                )}
                 {i.github && (
                   <a
                     href={i.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="relative z-10 ml-auto inline-flex min-h-8 items-center gap-1 text-[12.5px] text-fg-3 hover:text-fg"
+                    className={cn("relative z-10 inline-flex min-h-8 items-center gap-1 text-[12.5px] text-fg-3 hover:text-fg", !i.live && "ml-auto")}
                     aria-label={`${i.name} source code (opens in new tab)`}
                   >
                     Code <ArrowUpRight size={12} aria-hidden />

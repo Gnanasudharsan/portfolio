@@ -37,9 +37,6 @@ export default function AboutPage() {
             </p>
           </div>
           <div className="flex flex-col gap-4 lg:items-start">
-            <ButtonLink href="/resume" variant="primary">
-              View résumé
-            </ButtonLink>
             <ButtonLink href={`mailto:${profile.email}`} variant="secondary">
               {profile.email}
             </ButtonLink>

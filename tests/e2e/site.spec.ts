@@ -1,6 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 
-const routes = ["/", "/work", "/research", "/about", "/resume", "/work/helio", "/work/gpu-lab", "/work/cordon", "/work/ask-the-mesh"];
+const routes = ["/", "/work", "/research", "/about", "/work/helio", "/work/gpu-lab", "/work/cordon", "/work/ask-the-mesh"];
 
 function trackErrors(page: Page) {
   const errors: string[] = [];
@@ -99,19 +99,6 @@ test("skip link moves focus to main content", async ({ page, isMobile }) => {
   await expect(skip).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL(/#main$/);
-});
-
-test("résumé offers a downloadable PDF for each emphasis", async ({ page, request }) => {
-  await page.goto("/resume");
-  const tabs = page.getByRole("tab");
-  await expect(tabs).toHaveCount(7);
-  for (let i = 0; i < 7; i++) {
-    await tabs.nth(i).click();
-    const href = await page.getByTestId("resume-download").getAttribute("href");
-    const res = await request.get(href!);
-    expect(res.status(), href!).toBe(200);
-    expect(res.headers()["content-type"]).toContain("pdf");
-  }
 });
 
 test("external links open safely", async ({ page }) => {

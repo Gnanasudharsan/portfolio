@@ -116,16 +116,6 @@ export function Nav() {
           </a>
           <ThemeToggle />
           <Link
-            href="/resume"
-            className={cn(
-              "ml-1 hidden h-9 items-center rounded-full px-3.5 text-[14px] transition-colors md:inline-flex",
-              isActive(pathname, "/resume") ? "bg-surface-2 text-fg ring-1 ring-line" : "text-fg-2 hover:text-fg",
-            )}
-            aria-current={isActive(pathname, "/resume") ? "page" : undefined}
-          >
-            Résumé
-          </Link>
-          <Link
             href="/#contact"
             className="ml-1 hidden h-9 items-center rounded-full bg-fg px-4 text-[14px] font-medium text-bg transition-opacity hover:opacity-85 md:inline-flex"
           >
@@ -167,7 +157,7 @@ export function Nav() {
               <X size={20} />
             </button>
           </div>
-          {[...links, { href: "/resume", label: "Résumé" }, { href: "/#contact", label: "Contact" }].map((l) => (
+          {[...links, { href: "/#contact", label: "Contact" }].map((l) => (
             <Link
               key={l.href}
               href={l.href}

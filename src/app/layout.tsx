@@ -53,7 +53,6 @@ function paletteItems(): PaletteItem[] {
     { id: "p-work", group: "Pages", label: "Selected engineering", hint: "All case studies and project library", href: "/work" },
     { id: "p-research", group: "Pages", label: "Research", hint: "10 IEEE publications", href: "/research" },
     { id: "p-about", group: "Pages", label: "About", href: "/about" },
-    { id: "p-resume", group: "Pages", label: "Résumé", href: "/resume" },
     ...projects.map<PaletteItem>((p) => ({ id: `w-${p.slug}`, group: "Projects", label: p.short, hint: p.tagline, href: `/work/${p.slug}` })),
     ...experience.map<PaletteItem>((e) => ({ id: `e-${e.id}`, group: "Experience", label: `${e.org}`, hint: e.role, href: e.kind === "primary" ? "/#experience" : "/about#experience" })),
     ...publications.map<PaletteItem>((p) => ({ id: `r-${p.id}`, group: "Research", label: p.title, hint: `${p.venueShort} · ${p.domain}`, href: `/research#${p.id}` })),
@@ -61,7 +60,6 @@ function paletteItems(): PaletteItem[] {
     { id: "a-gh", group: "Actions", label: "View GitHub", href: profile.links.github, external: true },
     { id: "a-li", group: "Actions", label: "Open LinkedIn", href: profile.links.linkedin, external: true },
     { id: "a-scholar", group: "Actions", label: "Google Scholar", href: profile.links.scholar, external: true },
-    { id: "a-cv", group: "Actions", label: "Download résumé (PDF)", href: "/resume/Gnanasudharsan_Ashokumar_Resume.pdf", external: true },
   ];
 }
 

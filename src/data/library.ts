@@ -59,6 +59,7 @@ export const library: LibraryProject[] = [
     categories: ["Analytics", "Data Science"],
     year: 2025,
     stack: ["Python", "GeoPandas", "Plotly", "DBSCAN", "Spatial regression"],
+    live: "https://project3group28.netlify.app",
     note: "Visualization course group project (no public repository). Its environmental-justice layer used synthetic indicators and is not presented as a finding.",
     roles: { analyst: 3, "data-sci": 2 },
   },

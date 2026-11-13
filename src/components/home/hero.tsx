@@ -35,9 +35,6 @@ export function Hero() {
               <ButtonLink href="/work" variant="primary">
                 Explore my work
               </ButtonLink>
-              <ButtonLink href="/resume" variant="secondary">
-                View résumé
-              </ButtonLink>
               <ul className="ml-1 flex items-center gap-0.5" aria-label="Profiles">
                 {social.map(({ href, label, Icon }) => (
                   <li key={label}>

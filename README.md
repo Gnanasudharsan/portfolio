@@ -21,16 +21,8 @@ Requires Node 20.9 or newer.
 | `npm run build` / `npm start` | Production build and server |
 | `npm run lint` · `npm run typecheck` | ESLint (Next core-web-vitals) · `tsc --noEmit` |
 | `npm test` | Vitest content-integrity tests (sources, slugs, DOIs, images, no phone number) |
-| `npm run test:e2e` | Playwright: routes, 404 status, role lens, theme, explorer, palette, mobile menu, PDFs |
-| `npm run resume:pdf` | Prints every résumé variant from the running site to `public/resume/*.pdf` |
+| `npm run test:e2e` | Playwright: routes, 404 status, role lens, theme, explorer, palette, mobile menu |
 | `npm run check` | lint + typecheck + unit tests |
-
-Regenerate the résumé PDFs after changing `src/data/resume.ts`:
-
-```bash
-npm run build && npm start -- -p 3300 &
-BASE=http://localhost:3300 npm run resume:pdf
-```
 
 ## Routes
 
@@ -41,7 +33,6 @@ BASE=http://localhost:3300 npm run resume:pdf
 | `/work/[slug]` | Case study: problem, build, architecture diagram, contribution, decisions, results/charts, reliability, limitations, lessons |
 | `/research` | Ten IEEE papers by year, with DOIs, methods and code links |
 | `/about` | Career path (electronics → agentic AI), philosophy, full experience, education, recognition |
-| `/resume` | HTML résumé with seven emphases; each downloads as a one-page PDF |
 | `/sitemap.xml`, `/robots.txt`, `/manifest.webmanifest`, OG/Twitter images | SEO surface |
 
 Unknown `/work/*` slugs get a real 404 from `src/proxy.ts`.
@@ -59,7 +50,6 @@ All copy lives in `src/data/`. Pages contain no hard-coded content.
 | `research.ts` | Publications, with DOIs taken from the IEEE PDFs |
 | `skills.ts` | Skill groups, each linked to the projects that use it |
 | `roles.ts` | Role-lens orderings, default filters and skill emphasis |
-| `resume.ts` | Résumé variants |
 | `project-slugs.ts` | Slug list used by the 404 proxy (a unit test keeps it in sync) |
 
 To add a project, create `src/data/projects/<slug>.ts`, export it from `projects/index.ts`, add the slug to
@@ -79,7 +69,7 @@ To add a project, create `src/data/projects/<slug>.ts`, export it from `projects
   role-lens reordering, explorer filtering and the selector pill. Everything honors `prefers-reduced-motion`.
 - **Signature interaction:** the discipline graph in the hero. Each edge is a real project that joins two
   disciplines, and it reacts to pointer, hover and focus.
-- **Role lens:** reorders featured work, sets the explorer's default filter and the résumé emphasis, and
+- **Role lens:** reorders featured work, sets the explorer's default filter, and
   highlights relevant experience and skills through `<html data-role>`. These are CSS-only highlights, so
   server-rendered sections stay static. The choice persists in `localStorage`.
 
@@ -91,7 +81,6 @@ To add a project, create `src/data/projects/<slug>.ts`, export it from `projects
 | `/work` | 98 | 100 | 100 | 100 | 100 |
 | `/work/helio` | 100 | 100 | 100 | 100 | 100 |
 | `/research` | 100 | 100 | 100 | 100 | 100 |
-| `/resume` | 100 | 100 | 100 | 100 | 100 |
 
 CLS is 0.000 on every route measured. Scores vary slightly between runs.
 

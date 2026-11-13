@@ -23,9 +23,6 @@ export function Footer() {
           <Link className="text-fg-3 hover:text-fg" href="/about">
             About
           </Link>
-          <Link className="text-fg-3 hover:text-fg" href="/resume">
-            Résumé
-          </Link>
           <a className="inline-flex items-center gap-1.5 text-fg-3 hover:text-fg" href={profile.links.github} target="_blank" rel="noreferrer">
             <GitHubIcon size={13} /> GitHub
           </a>

@@ -6,7 +6,6 @@ import { library } from "@/data/library";
 import { roles } from "@/data/roles";
 import { skillGroups } from "@/data/skills";
 import { publications } from "@/data/research";
-import { resumeVariants } from "@/data/resume";
 import { PROJECT_SLUGS } from "@/data/project-slugs";
 
 const slugs = new Set(projects.map((p) => p.slug));
@@ -83,12 +82,6 @@ describe("research", () => {
     expect(publications).toHaveLength(10);
     for (const p of publications) expect(p.doi).toMatch(/^10\.1109\/[A-Za-z0-9-]+\.\d{4}\.\d+$/);
     expect(new Set(publications.map((p) => p.doi)).size).toBe(10);
-  });
-});
-
-describe("résumé", () => {
-  it("references real case studies", () => {
-    for (const v of resumeVariants) for (const p of v.projects) expect(slugs.has(p.slug), `${v.id}: ${p.slug}`).toBe(true);
   });
 });
 
