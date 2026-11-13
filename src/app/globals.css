@@ -1,0 +1,358 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens
+ * ------------------------------------------------------------------
+ * Neutral porcelain / graphite surfaces, one blue accent, one teal
+ * secondary used sparingly (data/"measured" signals). Every color is
+ * a token so light and dark stay in lockstep.
+ */
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  color-scheme: light;
+  --bg: #fafafa;
+  --bg-subtle: #f4f4f5;
+  --surface: #ffffff;
+  --surface-2: #f6f6f7;
+  --fg: #111111;
+  --fg-2: #3f3f46;
+  --fg-3: #63636b;
+  --fg-4: #6e6e77;
+  --line: #e7e7ea;
+  --line-strong: #d4d4d8;
+  --accent: #2563eb;
+  --accent-strong: #1d4ed8;
+  --accent-soft: #eaf1ff;
+  --accent-fg: #ffffff;
+  --teal: #0f766e;
+  --teal-soft: #e6f4f2;
+  --amber: #a16207;
+  --amber-soft: #fbf3e2;
+  --rose: #be123c;
+  --rose-soft: #fdecef;
+  --shadow-card: 0 1px 2px rgb(16 16 20 / 0.04), 0 8px 24px -12px rgb(16 16 20 / 0.08);
+  --shadow-pop: 0 12px 40px -12px rgb(16 16 20 / 0.18);
+  --nav-bg: rgb(250 250 250 / 0.72);
+  --selection: #cfe0ff;
+  --grid-line: rgb(17 17 17 / 0.045);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0a0a0b;
+  --bg-subtle: #0e0f11;
+  --surface: #111317;
+  --surface-2: #16181d;
+  --fg: #f4f4f5;
+  --fg-2: #d0d0d6;
+  --fg-3: #a1a1aa;
+  --fg-4: #8f8f99;
+  --line: #22252b;
+  --line-strong: #30343c;
+  --accent: #5b8cff;
+  --accent-strong: #7ea4ff;
+  --accent-soft: #14203a;
+  --accent-fg: #0a0a0b;
+  --teal: #3cc4b4;
+  --teal-soft: #0f2522;
+  --amber: #e0b354;
+  --amber-soft: #2a2213;
+  --rose: #f2738d;
+  --rose-soft: #2c141b;
+  --shadow-card: 0 1px 0 rgb(255 255 255 / 0.03) inset, 0 8px 24px -12px rgb(0 0 0 / 0.6);
+  --shadow-pop: 0 16px 48px -16px rgb(0 0 0 / 0.75);
+  --nav-bg: rgb(10 10 11 / 0.7);
+  --selection: #26406f;
+  --grid-line: rgb(255 255 255 / 0.04);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-subtle: var(--bg-subtle);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--fg);
+  --color-fg-2: var(--fg-2);
+  --color-fg-3: var(--fg-3);
+  --color-fg-4: var(--fg-4);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-fg: var(--accent-fg);
+  --color-teal: var(--teal);
+  --color-teal-soft: var(--teal-soft);
+  --color-amber: var(--amber);
+  --color-amber-soft: var(--amber-soft);
+  --color-rose: var(--rose);
+  --color-rose-soft: var(--rose-soft);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --radius-card: 14px;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    scroll-padding-top: 88px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html.theme-transition,
+  html.theme-transition *,
+  html.theme-transition *::before,
+  html.theme-transition *::after {
+    transition:
+      background-color 220ms var(--ease-out-quart),
+      border-color 220ms var(--ease-out-quart),
+      color 220ms var(--ease-out-quart),
+      fill 220ms var(--ease-out-quart),
+      stroke 220ms var(--ease-out-quart) !important;
+  }
+
+  ::selection {
+    background: var(--selection);
+    color: var(--fg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+    letter-spacing: -0.022em;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-strong) transparent;
+  }
+}
+
+@layer components {
+  .container-page {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 16px;
+  }
+
+  @media (min-width: 640px) {
+    .container-page {
+      padding-inline: 28px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container-page {
+      padding-inline: 40px;
+    }
+  }
+
+  .container-prose {
+    width: 100%;
+    max-width: 760px;
+    margin-inline: auto;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+  }
+
+  .display {
+    font-size: clamp(2.75rem, 7.2vw, 6.25rem);
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+    font-weight: 600;
+  }
+
+  .h-section {
+    font-size: clamp(2rem, 4.4vw, 3.5rem);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    font-weight: 600;
+  }
+
+  .h-card {
+    font-size: clamp(1.375rem, 2.2vw, 1.875rem);
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+    font-weight: 600;
+  }
+
+  .lede {
+    font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+    line-height: 1.6;
+    color: var(--fg-2);
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+  }
+
+  .hairline {
+    border-color: var(--line);
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  .link-underline {
+    text-decoration-line: underline;
+    text-decoration-color: color-mix(in srgb, currentColor 30%, transparent);
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+    transition: text-decoration-color 160ms var(--ease-out-quart);
+  }
+
+  .link-underline:hover {
+    text-decoration-color: currentColor;
+  }
+
+  .prose-case p {
+    color: var(--fg-2);
+    line-height: 1.75;
+    font-size: 1.0625rem;
+  }
+
+  .prose-case p + p {
+    margin-top: 1rem;
+  }
+}
+
+
+/* Transform-only entrance: text paints immediately, so LCP isn't delayed. */
+@keyframes hero-in {
+  from {
+    transform: translateY(10px);
+  }
+  to {
+    transform: none;
+  }
+}
+
+.hero-in {
+  animation: hero-in 700ms var(--ease-out-expo) both;
+}
+
+/* Scroll reveal: only when JS is running (html.js), so no-JS visitors see everything. */
+html.js .reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 550ms var(--ease-out-expo),
+    transform 550ms var(--ease-out-expo);
+}
+
+html.js .reveal[data-shown] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Role lens — server-rendered sections respond to <html data-role> */
+.lens-hl {
+  transition: opacity 240ms var(--ease-out-quart), border-color 240ms var(--ease-out-quart), background-color 240ms var(--ease-out-quart);
+}
+:root[data-role] .lens-hl {
+  opacity: 0.6;
+}
+:root[data-role="ai"] .lens-hl[data-roles~="ai"],
+:root[data-role="ml"] .lens-hl[data-roles~="ml"],
+:root[data-role="data-eng"] .lens-hl[data-roles~="data-eng"],
+:root[data-role="data-sci"] .lens-hl[data-roles~="data-sci"],
+:root[data-role="mlops"] .lens-hl[data-roles~="mlops"],
+:root[data-role="analyst"] .lens-hl[data-roles~="analyst"] {
+  opacity: 1;
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
+  background-color: color-mix(in srgb, var(--accent-soft) 55%, var(--surface));
+}
+.lens-badge {
+  display: none;
+}
+:root[data-role="ai"] .lens-hl[data-roles~="ai"] .lens-badge,
+:root[data-role="ml"] .lens-hl[data-roles~="ml"] .lens-badge,
+:root[data-role="data-eng"] .lens-hl[data-roles~="data-eng"] .lens-badge,
+:root[data-role="data-sci"] .lens-hl[data-roles~="data-sci"] .lens-badge,
+:root[data-role="mlops"] .lens-hl[data-roles~="mlops"] .lens-badge,
+:root[data-role="analyst"] .lens-hl[data-roles~="analyst"] .lens-badge {
+  display: inline-flex;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  :root,
+  [data-theme="dark"] {
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --fg: #000000;
+    --fg-2: #1f1f1f;
+    --fg-3: #3a3a3a;
+    --line: #dddddd;
+    --accent: #1d4ed8;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+@page {
+  size: letter;
+  margin: 0.36in 0.45in;
+}
