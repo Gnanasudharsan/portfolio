@@ -1,4 +1,4 @@
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://gnanasudharsan-portfolio.vercel.app").replace(/\/$/, "");
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://gnanaa.vercel.app").replace(/\/$/, "");
 
 export const profile = {
   name: "Gnanasudharsan Ashokumar",

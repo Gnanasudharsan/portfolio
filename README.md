@@ -97,7 +97,7 @@ CLS is 0.000 on every route measured. Scores vary slightly between runs.
 
 ## Deployment
 
-Live at **https://gnanasudharsan-portfolio.vercel.app**. Deployed on Vercel as a static or partially
+Live at **https://gnanaa.vercel.app**. Deployed on Vercel as a static or partially
 prerendered Next.js app, with no backend or database. Pushes to `main` deploy automatically.
 
 ```bash
