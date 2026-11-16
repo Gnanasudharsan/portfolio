@@ -64,18 +64,6 @@ export const experience: ExperienceItem[] = [
     stack: ["Python", "OpenCV", "CNNs", "Arduino", "Raspberry Pi", "Dashboards"],
   },
   {
-    id: "rightrev",
-    org: "Right Rev Pvt. Ltd.",
-    role: "Data Analyst Intern",
-    location: "Chennai, India",
-    start: "Mar 2023",
-    end: "Apr 2023",
-    kind: "earlier",
-    summary:
-      "Multi-cloud storage access with unified SQL querying and encrypted, user-keyed trace logs for auditing — work that became a first-author IEEE paper.",
-    stack: ["SQL", "AWS", "Azure", "Encryption"],
-  },
-  {
     id: "sairam-ra",
     org: "Sri Sairam Engineering College",
     role: "Research Assistant",
