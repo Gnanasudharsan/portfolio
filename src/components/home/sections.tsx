@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, ChevronDown } from "lucide-react";
 import { CountUp, Reveal } from "@/components/ui/motion";
@@ -10,6 +11,7 @@ import { skillGroups } from "@/data/skills";
 import { publications, doiUrl } from "@/data/research";
 import { awards } from "@/data/awards";
 import { education } from "@/data/education";
+import { certifications } from "@/data/certifications";
 import { projectBySlug } from "@/data/projects";
 import { roles } from "@/data/roles";
 import { cn } from "@/lib/cn";
@@ -331,6 +333,55 @@ export function Recognition() {
               </li>
             );
           })}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+export function Certifications() {
+  return (
+    <section id="certifications" aria-labelledby="certifications-title" className="scroll-mt-24 border-t border-line bg-bg-subtle py-20 sm:py-24">
+      <div className="container-page">
+        <SectionHeader id="certifications-title" eyebrow="Certifications" title="Verified credentials." />
+        <ul className="mt-12 grid grid-cols-1 gap-4 lg:grid-cols-2">
+          {certifications.map((c) => (
+            <li key={c.id} className="card flex flex-col gap-6 p-6 sm:flex-row sm:items-start sm:p-8">
+              <Image
+                src={c.badge.src}
+                alt={c.badge.alt}
+                width={c.badge.width}
+                height={c.badge.height}
+                sizes="112px"
+                className="size-24 shrink-0 sm:size-28"
+              />
+              <div className="min-w-0">
+                <p className="font-mono text-[11.5px] text-fg-4">
+                  Issued {c.issued}
+                  {c.expires ? ` · Expires ${c.expires}` : ""}
+                </p>
+                <h3 className="mt-2 text-[1.25rem] leading-snug font-semibold tracking-[-0.02em]">{c.name}</h3>
+                <p className="mt-1 text-[14.5px] text-fg-2">Issued by {c.issuer}</p>
+                <p className="mt-3 text-[14.5px] leading-relaxed text-fg-3">{c.summary}</p>
+                <ul className="mt-4 flex flex-wrap gap-1.5" aria-label="Skills covered">
+                  {c.skills.map((s) => (
+                    <li key={s} className="rounded-md border border-line px-2 py-0.5 text-[12.5px] text-fg-2">
+                      {s}
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href={c.verifyUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-5 inline-flex min-h-10 items-center gap-1.5 text-[14px] font-medium text-fg hover:text-accent"
+                >
+                  Verify on Credly <ArrowUpRight size={14} aria-hidden />
+                  <span className="sr-only">(opens in new tab)</span>
+                </a>
+              </div>
+            </li>
+          ))}
         </ul>
       </div>
     </section>

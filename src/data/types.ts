@@ -235,3 +235,17 @@ export interface Education {
   coursework?: string[];
   gpa?: string;
 }
+
+export interface Certification {
+  id: string;
+  name: string;
+  issuer: string;
+  issued: string;
+  /** ISO date, for structured data. */
+  issuedISO: string;
+  expires?: string;
+  summary: string;
+  skills: string[];
+  verifyUrl: string;
+  badge: { src: string; alt: string; width: number; height: number };
+}

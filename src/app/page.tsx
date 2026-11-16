@@ -1,6 +1,7 @@
 import { Hero } from "@/components/home/hero";
 import { SelectedEngineering } from "@/components/home/selected-engineering";
 import {
+  Certifications,
   ContactCTA,
   Credibility,
   EducationSection,
@@ -22,6 +23,7 @@ export default function HomePage() {
       <Skills />
       <ResearchPreview />
       <Recognition />
+      <Certifications />
       <EducationSection />
       <ContactCTA />
     </>

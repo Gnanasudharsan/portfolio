@@ -1,4 +1,5 @@
 import { education } from "@/data/education";
+import { certifications } from "@/data/certifications";
 import { profile, SITE_URL } from "@/data/profile";
 import type { Project } from "@/data/types";
 
@@ -14,12 +15,22 @@ export function personJsonLd() {
     sameAs: [profile.links.github, profile.links.linkedin, profile.links.scholar],
     knowsAbout: ["Machine learning", "Agentic AI", "Retrieval-augmented generation", "Data engineering", "MLOps", "Causal inference"],
     alumniOf: education.map((e) => ({ "@type": "CollegeOrUniversity", name: e.school })),
-    hasCredential: education.map((e) => ({
-      "@type": "EducationalOccupationalCredential",
-      credentialCategory: "degree",
-      name: e.degree,
-      recognizedBy: { "@type": "CollegeOrUniversity", name: e.school },
-    })),
+    hasCredential: [
+      ...education.map((e) => ({
+        "@type": "EducationalOccupationalCredential",
+        credentialCategory: "degree",
+        name: e.degree,
+        recognizedBy: { "@type": "CollegeOrUniversity", name: e.school },
+      })),
+      ...certifications.map((c) => ({
+        "@type": "EducationalOccupationalCredential",
+        credentialCategory: "certification",
+        name: c.name,
+        url: c.verifyUrl,
+        dateCreated: c.issuedISO,
+        recognizedBy: { "@type": "Organization", name: c.issuer },
+      })),
+    ],
   };
 }
 

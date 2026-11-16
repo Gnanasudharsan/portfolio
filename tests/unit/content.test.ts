@@ -7,6 +7,7 @@ import { roles } from "@/data/roles";
 import { skillGroups } from "@/data/skills";
 import { publications } from "@/data/research";
 import { PROJECT_SLUGS } from "@/data/project-slugs";
+import { certifications } from "@/data/certifications";
 
 const slugs = new Set(projects.map((p) => p.slug));
 
@@ -82,6 +83,16 @@ describe("research", () => {
     expect(publications).toHaveLength(10);
     for (const p of publications) expect(p.doi).toMatch(/^10\.1109\/[A-Za-z0-9-]+\.\d{4}\.\d+$/);
     expect(new Set(publications.map((p) => p.doi)).size).toBe(10);
+  });
+});
+
+describe("certifications", () => {
+  it("link to a verifiable badge and a local image", () => {
+    expect(certifications.length).toBeGreaterThan(0);
+    for (const c of certifications) {
+      expect(c.verifyUrl).toMatch(/^https:\/\/www\.credly\.com\/badges\/[0-9a-f-]{36}$/);
+      expect(existsSync(join(process.cwd(), "public", c.badge.src)), c.badge.src).toBe(true);
+    }
   });
 });
 
