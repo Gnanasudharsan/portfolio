@@ -94,11 +94,11 @@ export const charlie: Project = {
     "The pipeline's git history was replaced in the fork, so authorship of shared pipeline and model code can't be attributed per person.",
   ],
   visual: {
-    src: "/images/charlie/pipeline-graph.png",
-    alt: "Airflow graph view of Charlie's final MBTA data pipeline DAG, showing collection, processing, validation and DVC tasks.",
+    src: "/images/charlie/live-map.png",
+    alt: "Charlie's live train map: every MBTA subway train plotted on a dark map of Boston, color-coded by line with direction arrows, and a live count of 26 subway vehicles.",
     width: 1600,
-    height: 807,
-    frame: "Airflow · mbta_final_data_pipeline",
+    height: 900,
+    frame: "charlie-mbta.vercel.app · Live Map",
   },
   roles: { mlops: 3, ml: 2, "data-eng": 2, ai: 1, "data-sci": 1, analyst: 1 },
 };
