@@ -205,12 +205,18 @@ export interface ExperienceItem {
   stack: string[];
 }
 
+/** A skill: bare name, or name + stack aliases (`a`) + explicit usage ids (`in`). */
+export type SkillSpec = string | { n: string; a?: string[]; in?: string[] };
+
 export interface SkillGroup {
   id: string;
   title: string;
+  /** Legend label. */
+  short: string;
+  /** OKLCH hue for the family's tiles. */
+  hue: number;
   blurb: string;
-  core: string[];
-  more: string[];
+  skills: SkillSpec[];
   roles: RoleId[];
   evidence: string[];
 }

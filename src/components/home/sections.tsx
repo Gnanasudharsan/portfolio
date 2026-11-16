@@ -7,13 +7,12 @@ import { CopyEmail } from "@/components/ui/copy-email";
 import { GitHubIcon, LinkedInIcon, ScholarIcon } from "@/components/ui/icons";
 import { credibility, philosophy, principles, profile } from "@/data/profile";
 import { experience } from "@/data/experience";
-import { skillGroups } from "@/data/skills";
+import { buildSkillTable } from "@/lib/skills";
+import { SkillTable } from "@/components/home/skill-table";
 import { publications, doiUrl } from "@/data/research";
 import { awards } from "@/data/awards";
 import { education } from "@/data/education";
 import { certifications } from "@/data/certifications";
-import { projectBySlug } from "@/data/projects";
-import { roles } from "@/data/roles";
 import { cn } from "@/lib/cn";
 
 export function Credibility() {
@@ -187,63 +186,17 @@ export function Experience() {
 }
 
 export function Skills() {
+  const { families, elements } = buildSkillTable();
   return (
-    <section aria-labelledby="skills-title" className="py-24 sm:py-32">
+    <section id="skills" aria-labelledby="skills-title" className="scroll-mt-24 py-24 sm:py-32">
       <div className="container-page">
         <SectionHeader
           id="skills-title"
-          eyebrow="Systems I work with"
-          title="Grouped by what they build."
-          lede="No proficiency bars — each group links to the projects where it was actually used."
+          eyebrow="Skills"
+          title="A periodic table of my stack."
+          lede="Every element is a tool or technique, grouped into families by what it builds. Select one to see exactly where I used it — case studies, roles and certifications, linked."
         />
-        <ul className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {skillGroups.map((g) => {
-            const lensRoles = roles.filter((r) => r.skills.includes(g.id)).map((r) => r.id);
-            return (
-              <li key={g.id} className="lens-hl card relative flex flex-col p-5" data-roles={lensRoles.join(" ")}>
-                <span className="lens-badge absolute top-4 right-4 h-5 items-center rounded-full bg-accent-soft px-2 font-mono text-[10px] text-accent">
-                  relevant
-                </span>
-                <h3 className="pr-14 text-[16px] font-semibold">{g.title}</h3>
-                <p className="mt-2 text-[14px] leading-relaxed text-fg-3">{g.blurb}</p>
-                <ul className="mt-4 flex flex-wrap gap-1.5" aria-label={`${g.title}: core`}>
-                  {g.core.map((s) => (
-                    <li key={s} className="rounded-md border border-line px-2 py-0.5 text-[12.5px] text-fg-2">
-                      {s}
-                    </li>
-                  ))}
-                </ul>
-                <details className="group/more mt-3">
-                  <summary className="inline-flex min-h-8 cursor-pointer list-none items-center gap-1 text-[12.5px] text-fg-4 hover:text-fg [&::-webkit-details-marker]:hidden">
-                    +{g.more.length} more <ChevronDown size={13} className="transition-transform group-open/more:rotate-180" aria-hidden />
-                  </summary>
-                  <ul className="mt-2 flex flex-wrap gap-1.5">
-                    {g.more.map((s) => (
-                      <li key={s} className="rounded-md bg-surface-2 px-2 py-0.5 text-[12px] text-fg-3">
-                        {s}
-                      </li>
-                    ))}
-                  </ul>
-                </details>
-                <p className="mt-auto pt-5 text-[12.5px] text-fg-4">
-                  Used in{" "}
-                  {g.evidence.map((slug, i) => {
-                    const p = projectBySlug(slug);
-                    if (!p) return null;
-                    return (
-                      <span key={slug}>
-                        <Link href={`/work/${slug}`} className="link-underline text-fg-2 hover:text-fg">
-                          {p.short}
-                        </Link>
-                        {i < g.evidence.length - 1 ? ", " : ""}
-                      </span>
-                    );
-                  })}
-                </p>
-              </li>
-            );
-          })}
-        </ul>
+        <SkillTable families={families} elements={elements} />
       </div>
     </section>
   );
