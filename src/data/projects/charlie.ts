@@ -11,7 +11,7 @@ export const charlie: Project = {
   thesis:
     "The model is the smallest part of an ML product. Ingestion, versioning, monitoring and deployment are where it either holds up or falls over.",
   categories: ["MLOps", "ML Systems", "Data Engineering", "AI / Agents"],
-  status: "Archived",
+  status: "Live",
   period: "Sep – Dec 2025",
   year: 2025,
   layout: "wide",
@@ -34,6 +34,7 @@ export const charlie: Project = {
   ],
   links: {
     github: repo,
+    live: "https://charlie-mbta.vercel.app",
     docs: [
       { label: "Deployment guide", href: src("DEPLOYMENT_README.md") },
       { label: "Data pipeline", href: `${repo}/tree/main/Data_Pipeline` },
@@ -41,7 +42,7 @@ export const charlie: Project = {
     ],
   },
   contribution:
-    "Team project (Group 22, IE 7374 MLOps, Fall 2025), forked from a teammate's repository. In my fork I built the conversational API service, the Next.js frontend, the monitoring and retraining modules, and the GitHub Actions → Cloud Run deployment. The Cloud Run service is no longer running.",
+    "Team project (Group 22, IE 7374 MLOps, Fall 2025), forked from a teammate's repository. In my fork I built the conversational API service, the Next.js frontend, the monitoring and retraining modules, and the GitHub Actions → Cloud Run deployment. The Cloud Run service was later retired; the app is now live on Vercel.",
   architecture: {
     caption: "Data and models are versioned end to end, so any prediction can be traced back to the data and run that produced it.",
     layers: ["Source", "Pipeline", "Version", "Model", "Monitor", "Serve"],
@@ -89,7 +90,7 @@ export const charlie: Project = {
     "Writing the retraining policy down before deployment forces the team to agree on what “degraded” means.",
   ],
   caveats: [
-    "Course project; the Cloud Run deployment has since been shut down.",
+    "Course project; the original Cloud Run deployment was shut down, and the app now runs on Vercel.",
     "The pipeline's git history was replaced in the fork, so authorship of shared pipeline and model code can't be attributed per person.",
   ],
   visual: {
