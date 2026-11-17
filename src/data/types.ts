@@ -211,10 +211,8 @@ export type SkillSpec = string | { n: string; a?: string[]; in?: string[] };
 export interface SkillGroup {
   id: string;
   title: string;
-  /** Legend label. */
-  short: string;
-  /** OKLCH hue for the family's tiles. */
-  hue: number;
+  /** Layer name in the stack view, e.g. "Pipelines". */
+  layer: string;
   blurb: string;
   skills: SkillSpec[];
   roles: RoleId[];

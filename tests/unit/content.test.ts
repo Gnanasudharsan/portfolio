@@ -8,7 +8,7 @@ import { skillGroups } from "@/data/skills";
 import { publications } from "@/data/research";
 import { PROJECT_SLUGS } from "@/data/project-slugs";
 import { certifications } from "@/data/certifications";
-import { buildSkillTable, unresolvedSkillRefs } from "@/lib/skills";
+import { buildSkillStack, unresolvedSkillRefs } from "@/lib/skills";
 
 const slugs = new Set(projects.map((p) => p.slug));
 
@@ -78,14 +78,12 @@ describe("role lens", () => {
     for (const g of skillGroups) for (const e of g.evidence) expect(slugs.has(e), `${g.id}: ${e}`).toBe(true);
   });
 
-  it("builds a skills table with unique names and symbols and resolvable usage", () => {
-    const { elements } = buildSkillTable();
-    const names = elements.map((e) => e.name.toLowerCase());
-    const symbols = elements.map((e) => e.symbol);
+  it("builds the skills stack with every layer, unique names and resolvable usage", () => {
+    const layers = buildSkillStack();
+    expect(layers.map((l) => l.id).sort()).toEqual(skillGroups.map((g) => g.id).sort());
+    const names = layers.flatMap((l) => l.skills.map((s) => s.name.toLowerCase()));
     expect(new Set(names).size).toBe(names.length);
-    expect(new Set(symbols).size).toBe(symbols.length);
     expect(unresolvedSkillRefs()).toEqual([]);
-    for (const e of elements) expect(e.symbol.length, e.name).toBeLessThanOrEqual(4);
   });
 });
 

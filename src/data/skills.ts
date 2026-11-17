@@ -1,19 +1,21 @@
 import type { SkillGroup } from "./types";
 
 /**
- * The skills "periodic table". Each group is an element family with its own
- * hue. A skill is a name, optionally with:
+ * Skills, grouped into layers of the stack (see `STACK_ORDER`). A skill is a
+ * name, optionally with:
  *  - `a`: aliases matched against project / experience `stack` entries,
  *  - `in`: ids (project slug, library slug, experience id) where a concept
  *    skill was used but isn't spelled out in a stack list.
  * Where a skill was used is computed in `src/lib/skills.ts` — never typed here.
  */
+/** Top-down display order: from what users touch to the hardware underneath. */
+export const STACK_ORDER = ["backend", "analytics", "ai", "ml", "mlops", "cloud", "data", "stores", "vision"];
+
 export const skillGroups: SkillGroup[] = [
   {
     id: "ai",
     title: "AI & agentic systems",
-    short: "AI & agents",
-    hue: 268,
+    layer: "Intelligence",
     blurb: "Retrieval, orchestration, tool governance and evaluation for LLM applications that have to be right.",
     roles: ["ai", "mlops"],
     evidence: ["helio", "ramp"],
@@ -44,8 +46,7 @@ export const skillGroups: SkillGroup[] = [
   {
     id: "ml",
     title: "Machine learning",
-    short: "Machine learning",
-    hue: 318,
+    layer: "Models",
     blurb: "From gradient-boosted tabular models to CNNs and sequence models, with honest evaluation and explainability.",
     roles: ["ml", "data-sci"],
     evidence: ["gpu-lab", "charlie", "cordon"],
@@ -77,8 +78,7 @@ export const skillGroups: SkillGroup[] = [
   {
     id: "data",
     title: "Data engineering",
-    short: "Data engineering",
-    hue: 205,
+    layer: "Pipelines",
     blurb: "Batch and streaming pipelines with orchestration, contracts, and data-quality gates at every boundary.",
     roles: ["data-eng", "analyst"],
     evidence: ["dockline", "aeropulse", "charlie"],
@@ -107,8 +107,7 @@ export const skillGroups: SkillGroup[] = [
   {
     id: "stores",
     title: "Data stores & warehousing",
-    short: "Stores & warehouses",
-    hue: 172,
+    layer: "Storage",
     blurb: "Relational, time-series, vector and warehouse storage chosen for the access pattern, not the trend.",
     roles: ["data-eng", "analyst"],
     evidence: ["dockline", "tidewater", "helio"],
@@ -131,8 +130,7 @@ export const skillGroups: SkillGroup[] = [
   {
     id: "mlops",
     title: "MLOps & platform",
-    short: "MLOps",
-    hue: 145,
+    layer: "Operations",
     blurb: "Versioned data, tracked experiments, containerized services, and monitoring that catches drift before users do.",
     roles: ["mlops", "ml"],
     evidence: ["charlie", "gpu-lab", "helio"],
@@ -152,8 +150,7 @@ export const skillGroups: SkillGroup[] = [
   {
     id: "cloud",
     title: "Cloud & infrastructure",
-    short: "Cloud",
-    hue: 232,
+    layer: "Infrastructure",
     blurb: "Serverless and container deployments with least-privilege access and production-style configuration.",
     roles: ["mlops", "data-eng"],
     evidence: ["helio", "charlie", "aeropulse"],
@@ -171,8 +168,7 @@ export const skillGroups: SkillGroup[] = [
   {
     id: "analytics",
     title: "Analytics & BI",
-    short: "Analytics & BI",
-    hue: 72,
+    layer: "Insight",
     blurb: "Certified metrics, dashboards and geospatial analysis that turn pipelines into decisions.",
     roles: ["analyst", "data-sci"],
     evidence: ["dockline", "aeropulse", "cordon"],
@@ -198,8 +194,7 @@ export const skillGroups: SkillGroup[] = [
   {
     id: "backend",
     title: "Software engineering",
-    short: "Software",
-    hue: 22,
+    layer: "Product",
     blurb: "APIs, auth, typed frontends and tests — the parts that make a model into a product.",
     roles: ["ai"],
     evidence: ["ask-the-mesh", "aeropulse", "dockline"],
@@ -229,8 +224,7 @@ export const skillGroups: SkillGroup[] = [
   {
     id: "vision",
     title: "Vision, edge & GPU",
-    short: "Vision · edge · GPU",
-    hue: 45,
+    layer: "Hardware",
     blurb: "Kernels and launch overhead on GPUs, and computer vision running on small boards in the real world.",
     roles: ["ml"],
     evidence: ["gpu-lab"],

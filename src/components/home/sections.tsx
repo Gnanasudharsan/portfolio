@@ -7,8 +7,8 @@ import { CopyEmail } from "@/components/ui/copy-email";
 import { GitHubIcon, LinkedInIcon, ScholarIcon } from "@/components/ui/icons";
 import { credibility, philosophy, principles, profile } from "@/data/profile";
 import { experience } from "@/data/experience";
-import { buildSkillTable } from "@/lib/skills";
-import { SkillTable } from "@/components/home/skill-table";
+import { buildSkillStack } from "@/lib/skills";
+import { SkillStack } from "@/components/home/skill-stack";
 import { publications, doiUrl } from "@/data/research";
 import { awards } from "@/data/awards";
 import { education } from "@/data/education";
@@ -186,17 +186,16 @@ export function Experience() {
 }
 
 export function Skills() {
-  const { families, elements } = buildSkillTable();
   return (
     <section id="skills" aria-labelledby="skills-title" className="scroll-mt-24 py-24 sm:py-32">
       <div className="container-page">
         <SectionHeader
           id="skills-title"
           eyebrow="Skills"
-          title="A periodic table of my stack."
-          lede="Every element is a tool or technique, grouped into families by what it builds. Select one to see exactly where I used it — case studies, roles and certifications, linked."
+          title="The whole stack, layer by layer."
+          lede="From the product a user touches down to the hardware it runs on. Select any skill to trace it: where I used it, and every tool I used it with."
         />
-        <SkillTable families={families} elements={elements} />
+        <SkillStack layers={buildSkillStack()} />
       </div>
     </section>
   );
