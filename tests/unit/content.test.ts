@@ -8,7 +8,7 @@ import { skillGroups } from "@/data/skills";
 import { publications } from "@/data/research";
 import { PROJECT_SLUGS } from "@/data/project-slugs";
 import { certifications } from "@/data/certifications";
-import { buildSkillStack, unresolvedSkillRefs } from "@/lib/skills";
+import { buildSkillCategories, unresolvedSkillRefs } from "@/lib/skills";
 
 const slugs = new Set(projects.map((p) => p.slug));
 
@@ -78,8 +78,8 @@ describe("role lens", () => {
     for (const g of skillGroups) for (const e of g.evidence) expect(slugs.has(e), `${g.id}: ${e}`).toBe(true);
   });
 
-  it("builds the skills stack with every layer, unique names and resolvable usage", () => {
-    const layers = buildSkillStack();
+  it("builds every skill category, unique names and resolvable usage", () => {
+    const layers = buildSkillCategories();
     expect(layers.map((l) => l.id).sort()).toEqual(skillGroups.map((g) => g.id).sort());
     const names = layers.flatMap((l) => l.skills.map((s) => s.name.toLowerCase()));
     expect(new Set(names).size).toBe(names.length);

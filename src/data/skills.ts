@@ -1,21 +1,16 @@
 import type { SkillGroup } from "./types";
 
 /**
- * Skills, grouped into layers of the stack (see `STACK_ORDER`). A skill is a
- * name, optionally with:
+ * Skills by category, in display order. A skill is a name, optionally with:
  *  - `a`: aliases matched against project / experience `stack` entries,
  *  - `in`: ids (project slug, library slug, experience id) where a concept
  *    skill was used but isn't spelled out in a stack list.
  * Where a skill was used is computed in `src/lib/skills.ts` — never typed here.
  */
-/** Top-down display order: from what users touch to the hardware underneath. */
-export const STACK_ORDER = ["backend", "analytics", "ai", "ml", "mlops", "cloud", "data", "stores", "vision"];
-
 export const skillGroups: SkillGroup[] = [
   {
     id: "ai",
-    title: "AI & agentic systems",
-    layer: "Intelligence",
+    title: "AI & Agentic Systems",
     blurb: "Retrieval, orchestration, tool governance and evaluation for LLM applications that have to be right.",
     roles: ["ai", "mlops"],
     evidence: ["helio", "ramp"],
@@ -45,8 +40,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     id: "ml",
-    title: "Machine learning",
-    layer: "Models",
+    title: "Machine Learning",
     blurb: "From gradient-boosted tabular models to CNNs and sequence models, with honest evaluation and explainability.",
     roles: ["ml", "data-sci"],
     evidence: ["gpu-lab", "charlie", "cordon"],
@@ -64,21 +58,41 @@ export const skillGroups: SkillGroup[] = [
       "SHAP",
       "LIME",
       "Fairlearn",
-      { n: "Causal inference", a: ["pyfixest", "HonestDiD", "Synthetic control"] },
-      "statsmodels",
-      { n: "Forecasting", in: ["crypto-forecasting", "aeropulse"] },
-      { n: "SMOTE", in: ["charlie"] },
       "DBSCAN",
+      { n: "OpenCV", a: ["Computer vision"] },
+      "YOLO",
       "NLTK",
       "Snorkel",
-      "YOLO",
+      { n: "Hyperparameter tuning", in: ["charlie", "hazardous-fuel"] },
+    ],
+  },
+  {
+    id: "data-sci",
+    title: "Data Science",
+    blurb: "Statistics and causal designs that say how sure we are — not just what the model predicts.",
+    roles: ["data-sci", "analyst"],
+    evidence: ["cordon", "charlie", "aeropulse"],
+    skills: [
+      { n: "Causal inference", a: ["pyfixest", "HonestDiD", "Synthetic control"] },
+      { n: "Difference-in-differences", a: ["HonestDiD", "pyfixest"] },
+      "Synthetic control",
+      "statsmodels",
+      "pyfixest",
+      { n: "Bootstrap CIs", in: ["gpu-lab"] },
+      { n: "Statistical testing", in: ["cordon", "gpu-lab"] },
+      { n: "Forecasting", in: ["crypto-forecasting", "aeropulse"] },
       { n: "Feature engineering", in: ["charlie", "hazardous-fuel", "ledgerline"] },
+      { n: "Class imbalance (SMOTE)", in: ["charlie"] },
+      { n: "Exploratory analysis", in: ["hazardous-fuel", "hazardous-waste", "eeg-seizure"] },
+      { n: "Spatial regression" },
+      "pandas",
+      "Polars",
+      "Experimentation",
     ],
   },
   {
     id: "data",
-    title: "Data engineering",
-    layer: "Pipelines",
+    title: "Data Engineering",
     blurb: "Batch and streaming pipelines with orchestration, contracts, and data-quality gates at every boundary.",
     roles: ["data-eng", "analyst"],
     evidence: ["dockline", "aeropulse", "charlie"],
@@ -97,8 +111,6 @@ export const skillGroups: SkillGroup[] = [
       { n: "Databricks", a: ["Databricks bundles"] },
       "Great Expectations",
       "OpenLineage",
-      "pandas",
-      "Polars",
       "APScheduler",
       { n: "Streaming", in: ["tidewater", "dockline"] },
       { n: "ETL / ELT", in: ["aeropulse", "dockline", "tidewater", "charlie"] },
@@ -106,8 +118,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     id: "stores",
-    title: "Data stores & warehousing",
-    layer: "Storage",
+    title: "Databases & Warehousing",
     blurb: "Relational, time-series, vector and warehouse storage chosen for the access pattern, not the trend.",
     roles: ["data-eng", "analyst"],
     evidence: ["dockline", "tidewater", "helio"],
@@ -129,8 +140,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     id: "mlops",
-    title: "MLOps & platform",
-    layer: "Operations",
+    title: "MLOps",
     blurb: "Versioned data, tracked experiments, containerized services, and monitoring that catches drift before users do.",
     roles: ["mlops", "ml"],
     evidence: ["charlie", "gpu-lab", "helio"],
@@ -149,8 +159,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     id: "cloud",
-    title: "Cloud & infrastructure",
-    layer: "Infrastructure",
+    title: "Cloud & DevOps",
     blurb: "Serverless and container deployments with least-privilege access and production-style configuration.",
     roles: ["mlops", "data-eng"],
     evidence: ["helio", "charlie", "aeropulse"],
@@ -161,6 +170,7 @@ export const skillGroups: SkillGroup[] = [
       "Cloud SQL",
       "Azure",
       "Terraform",
+      { n: "CI/CD", a: ["GitHub Actions"] },
       { n: "Vercel", in: ["charlie"] },
       { n: "IAM / RBAC" },
     ],
@@ -168,7 +178,6 @@ export const skillGroups: SkillGroup[] = [
   {
     id: "analytics",
     title: "Analytics & BI",
-    layer: "Insight",
     blurb: "Certified metrics, dashboards and geospatial analysis that turn pipelines into decisions.",
     roles: ["analyst", "data-sci"],
     evidence: ["dockline", "aeropulse", "cordon"],
@@ -184,7 +193,6 @@ export const skillGroups: SkillGroup[] = [
       "MapLibre",
       "GeoPandas",
       { n: "Geospatial", in: ["hazardous-waste", "cordon", "aeropulse", "dockline"] },
-      "Spatial regression",
       "Quarto",
       { n: "KPI design", in: ["dockline", "aeropulse"] },
       { n: "Dashboards" },
@@ -193,8 +201,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     id: "backend",
-    title: "Software engineering",
-    layer: "Product",
+    title: "Software Engineering",
     blurb: "APIs, auth, typed frontends and tests — the parts that make a model into a product.",
     roles: ["ai"],
     evidence: ["ask-the-mesh", "aeropulse", "dockline"],
@@ -219,30 +226,6 @@ export const skillGroups: SkillGroup[] = [
       { n: "Linux" },
       { n: "Bash" },
       "Solidity",
-    ],
-  },
-  {
-    id: "vision",
-    title: "Vision, edge & GPU",
-    layer: "Hardware",
-    blurb: "Kernels and launch overhead on GPUs, and computer vision running on small boards in the real world.",
-    roles: ["ml"],
-    evidence: ["gpu-lab"],
-    skills: [
-      "CUDA",
-      "CUDA Graphs",
-      "Triton",
-      { n: "Metal / MPS" },
-      "torch.compile",
-      "Nsight Systems",
-      { n: "OpenCV", a: ["Computer vision"] },
-      "TFLite",
-      "Tesseract",
-      "Raspberry Pi",
-      "Jetson Nano",
-      "Arduino",
-      "ESP8266",
-      "RFID",
     ],
   },
 ];

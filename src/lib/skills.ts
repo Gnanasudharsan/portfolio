@@ -1,4 +1,4 @@
-import { skillGroups, STACK_ORDER } from "@/data/skills";
+import { skillGroups } from "@/data/skills";
 import { projects } from "@/data/projects";
 import { library } from "@/data/library";
 import { experience } from "@/data/experience";
@@ -19,10 +19,9 @@ export interface SkillItem {
   uses: SkillUse[];
 }
 
-export interface SkillLayer {
+export interface SkillCategory {
   id: string;
   title: string;
-  layer: string;
   blurb: string;
   skills: SkillItem[];
 }
@@ -62,15 +61,13 @@ const spec = (s: SkillSpec) => (typeof s === "string" ? { n: s } : s);
 const order = { case: 0, role: 1, project: 2, cert: 3 };
 
 /** Every skill with the places it was used, computed from project / role / certification data. */
-export function buildSkillStack(): SkillLayer[] {
+export function buildSkillCategories(): SkillCategory[] {
   const src = sources();
   const byId = new Map(src.map((s) => [s.use.id, s]));
 
-  const rank = (id: string) => STACK_ORDER.indexOf(id);
-  return [...skillGroups].sort((a, b) => rank(a.id) - rank(b.id)).map((g) => ({
+  return skillGroups.map((g) => ({
     id: g.id,
     title: g.title,
-    layer: g.layer,
     blurb: g.blurb,
     skills: g.skills.map((raw) => {
       const s = spec(raw);

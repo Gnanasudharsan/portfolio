@@ -7,8 +7,8 @@ import { CopyEmail } from "@/components/ui/copy-email";
 import { GitHubIcon, LinkedInIcon, ScholarIcon } from "@/components/ui/icons";
 import { credibility, philosophy, principles, profile } from "@/data/profile";
 import { experience } from "@/data/experience";
-import { buildSkillStack } from "@/lib/skills";
-import { SkillStack } from "@/components/home/skill-stack";
+import { buildSkillCategories } from "@/lib/skills";
+import { SkillCategories } from "@/components/home/skill-categories";
 import { publications, doiUrl } from "@/data/research";
 import { awards } from "@/data/awards";
 import { education } from "@/data/education";
@@ -192,10 +192,10 @@ export function Skills() {
         <SectionHeader
           id="skills-title"
           eyebrow="Skills"
-          title="The whole stack, layer by layer."
-          lede="From the product a user touches down to the hardware it runs on. Select any skill to trace it: where I used it, and every tool I used it with."
+          title="What I work with, by discipline."
+          lede="Nine categories across AI, machine learning, data science, data engineering, MLOps, analytics and software. Open one to see every skill in it — and where I used them."
         />
-        <SkillStack layers={buildSkillStack()} />
+        <SkillCategories categories={buildSkillCategories()} />
       </div>
     </section>
   );
