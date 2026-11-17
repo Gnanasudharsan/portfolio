@@ -107,56 +107,21 @@ export function SkillCategories({ categories }: { categories: SkillCategory[] })
               key="grid"
               className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1, transition: { duration: 0.25 } }}
+              animate={{ opacity: 1, transition: { duration: 0.3 } }}
               exit={{ opacity: 0, transition: { duration: 0.15 } }}
             >
-              {categories.map((c, i) => {
-                const Icon = icons[c.id] ?? Sparkles;
-                return (
-                  <li key={c.id}>
-                    <motion.button
-                      layoutId={`cat-${c.id}`}
-                      transition={morph}
-                      ref={(el) => {
-                        if (el) cardRefs.current.set(c.id, el);
-                      }}
-                      type="button"
-                      onClick={() => setOpen(c.id)}
-                      aria-expanded={false}
-                      className="group card relative flex h-full w-full flex-col p-5 text-left transition-colors hover:border-line-strong"
-                      style={{ borderRadius: 16 }}
-                    >
-                      <motion.div layout="position" className="flex items-center justify-between">
-                        <span className="grid size-10 place-items-center rounded-xl border border-line bg-bg-subtle text-accent">
-                          <Icon size={18} />
-                        </span>
-                        <span className="font-mono text-[11px] text-fg-4">{String(i + 1).padStart(2, "0")}</span>
-                      </motion.div>
-                      <motion.div layout="position" className="mt-4">
-                        <h3 className="text-[16.5px] font-semibold tracking-tight">{c.title}</h3>
-                        <p className="mt-1.5 line-clamp-2 text-[13.5px] leading-relaxed text-fg-3">{c.blurb}</p>
-                      </motion.div>
-                      <motion.div layout="position" className="mt-4 flex flex-wrap gap-1.5" aria-hidden>
-                        {c.skills.slice(0, 4).map((s) => (
-                          <span key={s.name} className="rounded-md border border-line px-2 py-0.5 text-[12px] text-fg-3">
-                            {s.name}
-                          </span>
-                        ))}
-                        {c.skills.length > 4 && (
-                          <span className="rounded-md bg-surface-2 px-2 py-0.5 text-[12px] text-fg-4">+{c.skills.length - 4}</span>
-                        )}
-                      </motion.div>
-                      <motion.span layout="position" className="mt-auto flex items-center justify-between pt-5 text-[12.5px] text-fg-4">
-                        <span>{c.skills.length} skills</span>
-                        <span className="inline-flex items-center gap-1 text-fg-3 transition-colors group-hover:text-fg">
-                          View all
-                          <ArrowRight size={13} className="transition-transform duration-200 group-hover:translate-x-0.5" />
-                        </span>
-                      </motion.span>
-                    </motion.button>
-                  </li>
-                );
-              })}
+              {categories.map((c, i) => (
+                <li key={c.id}>
+                  <FlipCard
+                    cat={c}
+                    index={i}
+                    onOpen={() => setOpen(c.id)}
+                    buttonRef={(el) => {
+                      if (el) cardRefs.current.set(c.id, el);
+                    }}
+                  />
+                </li>
+              ))}
             </motion.ul>
           )}
         </AnimatePresence>
@@ -165,6 +130,94 @@ export function SkillCategories({ categories }: { categories: SkillCategory[] })
         {cat ? `${cat.title} · ${cat.skills.length} skills · Esc to go back` : `${categories.length} categories · ${total} skills`}
       </p>
     </div>
+  );
+}
+
+const flipSpring = { type: "spring", stiffness: 170, damping: 22, mass: 1 } as const;
+
+/**
+ * A category card: the front shows only the category name; hovering (or
+ * keyboard focus) flips it to preview its skills, and clicking zooms it open.
+ * Touch devices skip the flip — a tap opens the category directly.
+ */
+function FlipCard({
+  cat,
+  index,
+  onOpen,
+  buttonRef,
+}: {
+  cat: SkillCategory;
+  index: number;
+  onOpen: () => void;
+  buttonRef: (el: HTMLButtonElement | null) => void;
+}) {
+  const [flipped, setFlipped] = useState(false);
+  const Icon = icons[cat.id] ?? Sparkles;
+  const preview = cat.skills.slice(0, 9);
+  const more = cat.skills.length - preview.length;
+  const num = String(index + 1).padStart(2, "0");
+
+  return (
+    <motion.button
+      layoutId={`cat-${cat.id}`}
+      transition={morph}
+      ref={buttonRef}
+      type="button"
+      onClick={onOpen}
+      onHoverStart={() => setFlipped(true)}
+      onHoverEnd={() => setFlipped(false)}
+      onFocus={(e) => setFlipped(e.currentTarget.matches(":focus-visible"))}
+      onBlur={() => setFlipped(false)}
+      whileTap={{ scale: 0.97 }}
+      aria-expanded={false}
+      aria-label={`${cat.title}, ${cat.skills.length} skills`}
+      className="relative block h-[208px] w-full text-left outline-none [perspective:1100px] focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+      style={{ borderRadius: 16 }}
+    >
+      <motion.div
+        className="relative size-full [transform-style:preserve-3d]"
+        initial={false}
+        animate={{ rotateY: flipped ? 180 : 0, y: flipped ? -4 : 0 }}
+        transition={flipSpring}
+      >
+        {/* Front — just the category */}
+        <div className="card absolute inset-0 flex flex-col justify-between overflow-hidden p-5 [backface-visibility:hidden]" style={{ borderRadius: 16 }}>
+          <div className="flex items-center justify-between">
+            <span className="grid size-11 place-items-center rounded-xl border border-line bg-bg-subtle text-accent">
+              <Icon size={20} />
+            </span>
+            <span className="font-mono text-[11px] text-fg-4">{num}</span>
+          </div>
+          <div>
+            <h3 className="text-[21px] leading-tight font-semibold tracking-tight">{cat.title}</h3>
+            <p className="mt-1.5 font-mono text-[11px] text-fg-4">{cat.skills.length} skills</p>
+          </div>
+        </div>
+
+        {/* Back — skill preview */}
+        <div
+          aria-hidden
+          className="absolute inset-0 flex flex-col overflow-hidden border border-accent/40 bg-surface p-5 [backface-visibility:hidden] [transform:rotateY(180deg)]"
+          style={{ borderRadius: 16 }}
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-[13.5px] font-semibold tracking-tight">{cat.title}</span>
+            <Icon size={16} className="text-accent" />
+          </div>
+          <div className="mt-3 flex flex-wrap content-start gap-1.5 overflow-hidden">
+            {preview.map((s) => (
+              <span key={s.name} className="rounded-md border border-line bg-bg-subtle px-2 py-0.5 text-[12px] text-fg-2">
+                {s.name}
+              </span>
+            ))}
+            {more > 0 && <span className="rounded-md bg-surface-2 px-2 py-0.5 text-[12px] text-fg-4">+{more}</span>}
+          </div>
+          <span className="mt-auto inline-flex items-center gap-1 pt-3 text-[12.5px] font-medium text-accent">
+            Open <ArrowRight size={13} />
+          </span>
+        </div>
+      </motion.div>
+    </motion.button>
   );
 }
 
@@ -258,8 +311,7 @@ function Panel({
           >
             {cat.title}
           </h3>
-          <p className="mt-3 text-[14.5px] leading-relaxed text-fg-3">{cat.blurb}</p>
-          <dl className="mt-6 grid grid-cols-2 gap-3">
+          <dl className="mt-5 grid grid-cols-2 gap-3">
             <div className="rounded-lg border border-line px-3 py-2.5">
               <dt className="font-mono text-[10.5px] tracking-wide text-fg-4 uppercase">Skills</dt>
               <dd className="mt-0.5 text-[20px] font-semibold">{cat.skills.length}</dd>

@@ -192,8 +192,7 @@ export function Skills() {
         <SectionHeader
           id="skills-title"
           eyebrow="Skills"
-          title="What I work with, by discipline."
-          lede="Nine categories across AI, machine learning, data science, data engineering, MLOps, analytics and software. Open one to see every skill in it — and where I used them."
+          title="What I work with."
         />
         <SkillCategories categories={buildSkillCategories()} />
       </div>
