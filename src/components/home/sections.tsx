@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, ChevronDown } from "lucide-react";
-import { CountUp, Reveal } from "@/components/ui/motion";
+import { CountUp, Reveal, RollingNumber } from "@/components/ui/motion";
 import { ButtonLink, SectionHeader } from "@/components/ui/primitives";
 import { CopyEmail } from "@/components/ui/copy-email";
 import { GitHubIcon, LinkedInIcon, ScholarIcon } from "@/components/ui/icons";
@@ -32,7 +32,7 @@ export function Credibility() {
           >
             <dt className="order-2 text-[14px] text-fg-2">{c.label}</dt>
             <dd className="order-1 text-[2.25rem] leading-none font-semibold tracking-[-0.04em] tabular-nums sm:text-[2.75rem]">
-              <CountUp value={c.value} decimals={"decimals" in c ? c.decimals : 0} />
+              <RollingNumber value={c.value} decimals={"decimals" in c ? c.decimals : 0} delay={i * 0.12} />
               <span className="text-fg-3">{c.suffix}</span>
             </dd>
             <dd className="order-3 font-mono text-[11.5px] text-fg-4">{c.detail}</dd>
